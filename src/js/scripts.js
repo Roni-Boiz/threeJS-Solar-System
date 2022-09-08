@@ -7,11 +7,18 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import Stats from 'stats.js';
 
 import sunTexture from '../img/sun.jpg';
+import mercuryTexture from '../img/mercury.jpg';
+import venusTexture from '../img/venus.jpg';
+import venusCloudTexture from '../img/venus_atmosphere.jpg';
 import earthTexture from '../img/earth.jpg';
 import earthcloudTexture from '../img/earthclouds.png';
+import marsTexture from '../img/mars.jpg';
+import jupiterTexture from '../img/jupiter.jpg';
 import saturnTexture from '../img/saturn.jpg';
 import saturnringTexture from '../img/saturn_rings.png';
 import smallringTexture from '../img/small_ring_tex.png';
+import uranusTexture from '../img/uranus.jpg';
+import neptuneTexture from '../img/neptune.jpg';
 import starsTexture from '../img/stars.jpg';
 import stars8kTexture from '../img/stars_8k.jpg';
 import moonTexture from '../img/moon.jpg';
@@ -100,7 +107,7 @@ sun.castShadow = true;
 scene.add(sun);
 
 function createPlanet(radius, texture, position, ring, clouds) {
-    const geometry = new THREE.SphereGeometry(radius, 32, 32);
+    const geometry = new THREE.SphereGeometry(radius, 64, 64);
     const material = new THREE.MeshStandardMaterial({
         map: textureLoader.load(texture),
         transparent: true
@@ -123,7 +130,7 @@ function createPlanet(radius, texture, position, ring, clouds) {
         const ringGeometry = new THREE.RingGeometry(
             ring.innerRadius,
             ring.outerRadius,
-            32
+            64
         );
         const ringMaterial = new THREE.MeshStandardMaterial({
             map: textureLoader.load(ring.texture),
@@ -150,7 +157,7 @@ function createPlanet(radius, texture, position, ring, clouds) {
 
     let cloudMesh;
     if (clouds) {
-        const cloudGeometry = new THREE.SphereGeometry(clouds.radius, 32, 32);
+        const cloudGeometry = new THREE.SphereGeometry(clouds.radius, 64, 64);
         const cloudMaterial = new THREE.MeshStandardMaterial({
             map: textureLoader.load(clouds.texture),
             transparent: true
@@ -170,7 +177,7 @@ function createPlanet(radius, texture, position, ring, clouds) {
 }
 
 function createMoon(radius, texture, position, planet, theta) {
-    const geometry = new THREE.SphereGeometry(radius, 32, 32);
+    const geometry = new THREE.SphereGeometry(radius, 64, 64);
     const material = new THREE.MeshStandardMaterial({
         map: textureLoader.load(texture)
     });
@@ -196,16 +203,27 @@ function createMoon(radius, texture, position, planet, theta) {
     return { mesh: moon, object: parentObject }
 }
 
-const earth = createPlanet(7, earthTexture, 50, undefined, {
+const mercury = createPlanet(2.67, mercuryTexture, 35, undefined, undefined);
+
+const venus = createPlanet(6.67, venusTexture, 67, undefined, {
+    radius: 6.77,
+    texture: venusCloudTexture,
+});
+
+const earth = createPlanet(7, earthTexture, 93, undefined, {
     radius: 7.1,
     texture: earthcloudTexture,
 });
 
-const moon = createMoon(1, moonTexture, 17, earth, 0.5);
+const moon = createMoon(1, moonTexture, 13, earth, 0.5);
 
-const saturn = createPlanet(10, saturnTexture, 120, {
-    innerRadius: 11,
-    outerRadius: 20,
+const mars = createPlanet(3.66, marsTexture, 142, undefined, undefined);
+
+const jupiter = createPlanet(77.7, jupiterTexture, 484, undefined, undefined);
+
+const saturn = createPlanet(64.66, saturnTexture, 889, {
+    innerRadius: 66.66,
+    outerRadius: 103.66,
     texture: smallringTexture,
     up: {
         rotationY: -0.1
@@ -214,6 +232,10 @@ const saturn = createPlanet(10, saturnTexture, 120, {
         rotationY: 0.9
     }
 });
+
+const uranus = createPlanet(28.11, uranusTexture, 1790, undefined, undefined);
+
+const neptune = createPlanet(27.33, neptuneTexture, 2880, undefined, undefined);
 
 const moon1 = createMoon(1.1, moon1Texture, 25, saturn, 0.5); //0.4
 const moon2 = createMoon(1.4, moon2Texture, 30, saturn, 0.5); //0.1
@@ -251,7 +273,7 @@ objLoader.load('models/spaceship2.obj', function (object) {
     });
     sataliteObj = object;
     scene.add(object);
-    object.position.set(70, 10, 5);
+    object.position.set(103, 10, 5);
     object.rotation.y = -0.5 * Math.PI;
 },
 function (xhr) {
@@ -264,7 +286,7 @@ function (error) {
 let material3 = new THREE.MeshPhongMaterial({ map: textureLoader.load(meteoriteTexture) });
 
 let meteorites = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 100; i++) {
     objLoader.load('models/metiorite.obj', function (object) {
         let scale = Math.random()/100;
         object.scale.set(scale, scale, scale);
@@ -273,9 +295,9 @@ for (let i = 0; i < 10; i++) {
         });
         meteorites.push(object);
         scene.add(object);
-        let posX = -200 + Math.floor(Math.random() * 401);
-        let posY = -200 + Math.floor(Math.random() * 401);
-        let posZ = -200 + Math.floor(Math.random() * 401);
+        let posX = -3001 + Math.floor(Math.random() * 3001);
+        let posY = -3001 + Math.floor(Math.random() * 3001);
+        let posZ = -3001 + Math.floor(Math.random() * 3001);
         object.position.set(posX, posY, posZ);
     },
     function (xhr) {
@@ -297,7 +319,7 @@ gltfLoader.load(hubbleURL.href, function(object) {
     });
     hubbleObj = model;
     scene.add(model);
-    model.position.set(70,4,0);
+    model.position.set(103,4,0);
     model.rotation.z = 0.5 * Math.PI;
     model.rotation.x = 0.5 * Math.PI;
     model.rotation.y = 0.1 * Math.PI;
