@@ -237,10 +237,10 @@ const uranus = createPlanet(28.11, uranusTexture, 1790, undefined, undefined);
 
 const neptune = createPlanet(27.33, neptuneTexture, 2880, undefined, undefined);
 
-const moon1 = createMoon(1.1, moon1Texture, 25, saturn, 0.5); //0.4
-const moon2 = createMoon(1.4, moon2Texture, 30, saturn, 0.5); //0.1
-const moon3 = createMoon(1, moon3Texture, 35, saturn, 0.5); //0.6
-const moon4 = createMoon(1.5, moon4Texture, 40, saturn, 0.5);//-0.8
+const moon1 = createMoon(3.3, moon1Texture, 110, saturn, 0.5); //0.4
+const moon2 = createMoon(4.2, moon2Texture, 120, saturn, 0.5); //0.1
+const moon3 = createMoon(3, moon3Texture, 130, saturn, 0.5); //0.6
+const moon4 = createMoon(4.5, moon4Texture, 140, saturn, 0.5);//-0.8
 
 const helper = new THREE.CameraHelper(pointLight.shadow.camera);
 
@@ -382,8 +382,14 @@ gui.addColor(options, 'lightsource').onChange(function (e) {
 
 gui.add(options, 'wireframe').onChange(function (e) {
     sun.material.wireframe = e;
+    mercury.mesh.material.wireframe = e;
+    venus.mesh.material.wireframe = e;
     earth.mesh.material.wireframe = e;
+    mars.mesh.material.wireframe = e;
+    jupiter.mesh.material.wireframe = e;
     saturn.mesh.material.wireframe = e;
+    uranus.mesh.material.wireframe = e;
+    neptune.mesh.material.wireframe = e;
     moon.mesh.material.wireframe = e;
     moon1.mesh.material.wireframe = e;
     moon2.mesh.material.wireframe = e;
@@ -428,9 +434,15 @@ function animate() {
 
     if (!options.freeze) {
         // planets
+        mercury.object.rotateY(0.006 + options.speed);
+        venus.object.rotateY(0.0048 + options.speed);
         earth.object.rotateY(0.004 + options.speed);
         moon.object.rotateY(0.0004 + options.speed);
-        saturn.object.rotateY(0.001 + options.speed);
+        mars.object.rotateY(0.0032 + options.speed);
+        jupiter.object.rotateY(0.00172 + options.speed);
+        saturn.object.rotateY(0.0012 + options.speed);
+        uranus.object.rotateY(0.00088 + options.speed);
+        neptune.object.rotateY(0.00072 + options.speed);
 
         // Spaceships
         spaceshipObj.position.x += 0.1;
@@ -445,14 +457,20 @@ function animate() {
 
     if(!options.freeze_planets) {
         sun.rotateY(0.0004 + options.speed);
+        mercury.mesh.rotateY(0.000006 + options.speed);
+        venus.mesh.rotateY(0.0000036 + options.speed);
         earth.mesh.rotateY(0.0009 + options.speed);
         earth.cloudMesh.rotateY(0.00005 + options.speed);
+        mars.mesh.rotateY(0.00045 + options.speed);
+        jupiter.mesh.rotateY(0.02 + options.speed);
         saturn.mesh.rotateY(0.004 + options.speed);
         moon.mesh.rotateY(0.0015 + options.speed);
         moon1.mesh.rotateY(0.011 + options.speed);
         moon2.mesh.rotateY(0.0075 + options.speed);
         moon3.mesh.rotateY(0.0078 + options.speed);
         moon4.mesh.rotateY(0.0032 + options.speed);
+        uranus.mesh.rotateY(0.002 + options.speed);
+        neptune.mesh.rotateY(0.001 + options.speed);
     }
 
     if(!options.freeze_moons) {
